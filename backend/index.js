@@ -1,13 +1,19 @@
 const express = require("express");
+const cors = require("cors");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+app.use(
+  cors({
+    origin: "http://localhost:5174",
+    credentials: true,
+  })
+);
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Real-Time Chat App API");
-});
+app.use("/auth", authRoutes); // prefix
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });
